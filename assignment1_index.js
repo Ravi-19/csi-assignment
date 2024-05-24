@@ -5,4 +5,6 @@ const http = require('http');
 http.createServer( (req, res)=> {
   res.writeHead(200, {'Content-Type': 'text/html'});
   res.end('Hello World!');
-}).listen(4000);
+}).listen(4000 , ()=> {
+    console.log("listing on port " , 4000) ; 
+});
