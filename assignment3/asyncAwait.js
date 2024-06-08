@@ -34,5 +34,12 @@ async function fetchUserAndPosts() {
     }
 }
 
-fetchUserAndPosts();
+try {
+    // try to fetch data of user using this function
+    fetchUserAndPosts();
+    
+} catch (error) {
+    console.log("error occured while fetching data and post of user : " , error) ; 
+}
+
  
