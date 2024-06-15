@@ -1,4 +1,5 @@
 // a user model object to mimic database 
+const {success , error} = require('../utils/responseWrapper')  ;
 
 const user = [{
     email :"ravi@gmail.com" , 
@@ -16,22 +17,22 @@ const signupController = async(req , res) => {
      const {email  , password} = req.body ; 
      // apply some check for user is already present or having wrong input data 
      if(!email || !password) {
-        return res.status(400).send("all field are required for signup") ; 
+        return res.status(400).send(error(400 , "all field are required for signup")) ; 
      } 
      // check user is already present or not 
      for (let i = 0 ; i < user.length ; i++) {
          if(user[i].email == email) {
-            return res.status(400).send("user is already present") ; 
+            return res.status(400).send(error(400 , "user is already present")) ; 
          }
      }
      // 
      const newUser = {email , password} ; 
      user.push(newUser) ; 
  
-    return  res.status(201).send("user created successfully") ; 
-   } catch (error) {
-     console.log("error in signup :" , error ) ; 
-    return  res.status(500).send("internal server error" , error.message) ; 
+    return  res.status(201).send(success(201 , "user created successfully")) ; 
+   } catch (err) {
+     console.log("error in signup :" , err ) ; 
+    return  res.status(500).send(error(500 , err.message)) ; 
    }
 }
 
@@ -41,7 +42,7 @@ const loginController = async(req , res) => {
       const {email  , password} = req.body ; 
       // apply some check for user is already present or having wrong input data 
       if(!email || !password) {
-        return  res.status(400).send("all field are required for signup") ; 
+        return  res.status(400).send(error(400 , "all field are required for signup")) ; 
       } 
       // find user in data base 
       let isPresent = false ; 
@@ -54,19 +55,19 @@ const loginController = async(req , res) => {
                 break ; 
               }
               else {
-                res.status(401).send("incorrect password") ; 
+                return  res.status(401).send(error(401 , "incorrect password")) ; 
               }
           }
       }
       if(isPresent) {
-      return res.status(200).send("login successfully") ; 
+      return res.status(200).send(success(200 , "login successfully")) ; 
         // we can send any token , ( eg. JWT) when we login  successfully
       }else {
-      return  res.status(404).send("user not found")  ; 
+      return  res.status(404).send(error(404 , "user not found"))  ; 
       }
-    } catch (error) {
-      console.log("error in login :" , error ) ; 
-      return res.status(500).send(`internal server error: ${error}`) ; 
+    } catch (err) {
+      console.log("error in login :" , err ) ; 
+      return res.status(500).send(error(500 , `internal server error: ${err.message}`)) ; 
     }
  }
 
