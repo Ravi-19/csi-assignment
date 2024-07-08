@@ -26,7 +26,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 // Third-party API integration
 app.get('/api-data', async (req, res, next) => {
   try {
-    const response = await axios.get('https://api.example.com/data');
+    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
     res.json(response.data);
   } catch (error) {
     next(error);
