@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const items = require('./routes/items');
+require('dotenv').config() ; 
 
 const app = express();
 const port = 3000;
